@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import "./conn/conn.js";  // Ensure file extensions are included
+import "./conn/conn.js";  // Ensure the MongoDB connection file is properly imported
 import user from "./routes/user.js";
 import book from "./routes/book.js";
 import favourites from "./routes/favourites.js";
@@ -21,5 +21,5 @@ app.use("/api/v1", favourites);
 app.use("/api/v1", cart);
 app.use("/api/v1", order);
 
-// Export the app for Vercel
+// Export the app
 export default app;
