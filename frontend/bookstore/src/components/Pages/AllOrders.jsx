@@ -9,7 +9,7 @@ const AllOrders = () => {
         const fetchOrders = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await axios.get("http://localhost:1000/api/v1/get-all-orders", {
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/get-all-orders`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

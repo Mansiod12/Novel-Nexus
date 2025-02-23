@@ -8,7 +8,7 @@ const RecentlyAdded = () => {
   useEffect(() => {
     const fetchBooks = async () => {  // ✅ Function name should be meaningful
       try {
-        const response = await axios.get("http://localhost:1000/api/v1/get-recent-books");  
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/get-recent-books`);  
         console.log("Fetched Data:", response.data);  // ✅ Debugging - Check API response
 
         setData(response.data.data || []);  // ✅ Ensure `data` exists in API response

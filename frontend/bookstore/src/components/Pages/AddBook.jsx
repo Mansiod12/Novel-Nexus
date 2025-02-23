@@ -27,7 +27,7 @@ const AddBook = () => {
             }
 
             await axios.post(
-                "http://localhost:1000/api/v1/add-book",
+                `${import.meta.env.VITE_BACKEND_URL}/api/v1/add-book`,
                 bookData,
                 {
                     headers: {

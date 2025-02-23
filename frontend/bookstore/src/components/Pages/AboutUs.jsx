@@ -11,6 +11,7 @@ const AboutUs = () => {
           <p className="mt-4 text-lg">
             Welcome to our bookstore! It all started with a passion for books and the desire to share that passion with the world. Our mission is simple: to inspire minds, spark creativity, and bring people closer to the world of literature. We believe in the power of reading to transform lives, and our carefully curated selection of books reflects that. Join us on a journey through stories that can change the way we see the world.
           </p>
+          
         </section>
 
         {/* Image Section */}

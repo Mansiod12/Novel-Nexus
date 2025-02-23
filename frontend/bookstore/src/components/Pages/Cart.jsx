@@ -22,7 +22,7 @@ const Cart = () => {
           authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get("http://localhost:1000/api/v1/get-user-cart", { headers });
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/get-user-cart`, { headers });
         setCartBooks(response.data.data || []);
       } catch (error) {
         alert("Failed to load cart. Please try again.");
@@ -43,7 +43,7 @@ const Cart = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:1000/api/v1/place-order",
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/place-order`,
         { order: cartBooks },
         { headers }
       );
@@ -67,7 +67,7 @@ const Cart = () => {
         authorization: `Bearer ${localStorage.getItem("token")}`,
       };
 
-      await axios.put(`http://localhost:1000/api/v1/remove-from-cart/${bookId}`, {}, { headers });
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/remove-from-cart/${bookId}`, {}, { headers });
       setCartBooks(cartBooks.filter((book) => book._id !== bookId));
     } catch (error) {
       alert("Failed to remove book. Please try again.");

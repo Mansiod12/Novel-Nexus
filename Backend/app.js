@@ -1,26 +1,25 @@
-const express= require("express");
-const app=express();
-require("dotenv").config();
-require("./conn/conn");
-const cors=require("cors");
-const user=require("./routes/user");
-const book=require("./routes/book");
-const favourites=require("./routes/favourites");
-const cart=require("./routes/cart");
-const order=require("./routes/order");
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import "./conn/conn.js";  // Ensure file extensions are included
+import user from "./routes/user.js";
+import book from "./routes/book.js";
+import favourites from "./routes/favourites.js";
+import cart from "./routes/cart.js";
+import order from "./routes/order.js";
+
+dotenv.config();
+const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-//routes
+// Routes
+app.use("/api/v1", user);
+app.use("/api/v1", book);
+app.use("/api/v1", favourites);
+app.use("/api/v1", cart);
+app.use("/api/v1", order);
 
-app.use("/api/v1",user);
-app.use("/api/v1",book);
-app.use("/api/v1",favourites);
-app.use("/api/v1",cart);
-app.use("/api/v1",order);
-
-app.listen(process.env.PORT,()=>{
-    console.log(`Server started at port ${process.env.PORT}`);
-});
-
+// Export the app for Vercel
+export default app;

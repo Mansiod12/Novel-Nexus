@@ -22,7 +22,7 @@ const SignupPage = () => {
     e.preventDefault(); // 
 
     try {
-      const response = await axios.post("http://localhost:1000/api/v1/sign-up", values);
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sign-up`, values);
       
       alert(response.data.message); 
       navigate("/LogIn"); 

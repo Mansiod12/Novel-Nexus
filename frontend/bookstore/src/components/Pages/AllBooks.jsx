@@ -8,7 +8,7 @@ const AllBooks = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:1000/api/v1/get-all-books");
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/get-all-books`);
         console.log("Fetched Data:", response.data);
         setData(response.data.data || []);
       } catch (error) {

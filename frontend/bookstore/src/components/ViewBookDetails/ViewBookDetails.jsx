@@ -27,7 +27,7 @@ const ViewBookDetails = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(`http://localhost:1000/api/v1/get-book-by-id/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/v1/get-book-by-id/${id}`);
         setData(response.data.data || {});
         setUpdatedData(response.data.data || {});
       } catch (err) {
@@ -41,18 +41,18 @@ const ViewBookDetails = () => {
   }, [id]);
 
   const handleFavourite = async () => {
-    const response = await axios.put("http://localhost:1000/api/v1/add-to-favourite", {}, { headers });
+    const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/add-to-favourite`, {}, { headers });
     alert(response.data.message);
   };
 
   const handleCart = async () => {
-    const response = await axios.put("http://localhost:1000/api/v1/add-to-cart", {}, { headers });
+    const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/add-to-cart`, {}, { headers });
     alert(response.data.message);
   };
 
   const handleEdit = async () => {
     try {
-      const response = await axios.put("http://localhost:1000/api/v1/update-book", updatedData, { headers });
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/v1/update-book`, updatedData, { headers });
       alert(response.data.message);
       setData(updatedData);
       setEditMode(false);
@@ -67,7 +67,7 @@ const ViewBookDetails = () => {
     if (!confirmDelete) return;
 
     try {
-      const response = await axios.delete("http://localhost:1000/api/v1/delete-book", { headers });
+      const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/v1/delete-book`, { headers });
       alert(response.data.message);
       navigate("/books"); // Redirect after deletion
     } catch (error) {

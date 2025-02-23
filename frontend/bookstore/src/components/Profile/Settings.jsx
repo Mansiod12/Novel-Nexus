@@ -16,7 +16,7 @@ const Settings = () => {
         };
 
         const response = await axios.get(
-          "http://localhost:1000/api/v1/get-user-information",
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/get-user-information`,
           { headers }
         );
 
