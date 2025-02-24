@@ -85,19 +85,59 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden flex flex-col items-center mt-4 bg-[#406343] py-4">
-          {links.map((items, i) => (
-            <Link
-              to={items.link}
-              key={i}
-              className="text-lg font-medium hover:text-[#ECE7B4] transition-all duration-300"
-              onClick={() => setIsOpen(false)}
-            >
-              {items.title}
-            </Link>
-          ))}
-        </div>
+  <div className="md:hidden flex flex-col items-center mt-4 bg-[#406343] py-4">
+    {links.map((items, i) => (
+      <Link
+        to={items.link}
+        key={i}
+        className="text-lg font-medium hover:text-[#ECE7B4] transition-all duration-300"
+        onClick={() => setIsOpen(false)}
+      >
+        {items.title}
+      </Link>
+    ))}
+
+    {/* Add Login/Signup to Mobile Menu */}
+    <div className="flex flex-col gap-4 mt-4">
+      {isLoggedIn ? (
+        role === "admin" ? (
+          <Link
+            to="/profile"
+            className="px-5 py-2 border-2 border-[#ECE7B4] rounded-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all"
+            onClick={() => setIsOpen(false)}
+          >
+            Admin Profile
+          </Link>
+        ) : (
+          <Link
+            to="/profile"
+            className="px-5 py-2 border-2 border-[#ECE7B4] rounded-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all"
+            onClick={() => setIsOpen(false)}
+          >
+            Profile
+          </Link>
+        )
+      ) : (
+        <>
+          <Link
+            to="/LogIn"
+            className="px-5 py-2 border-2 border-[#ECE7B4] rounded-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all"
+            onClick={() => setIsOpen(false)}
+          >
+            LogIn
+          </Link>
+          <Link
+            to="/SignUp"
+            className="px-5 py-2 bg-[#F3EFCC] text-black rounded-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all"
+            onClick={() => setIsOpen(false)}
+          >
+            SignUp
+          </Link>
+        </>
       )}
+    </div>
+  </div>
+)}
     </nav>
   );
 };
