@@ -83,19 +83,19 @@ const Cart = () => {
             {cartBooks.map((book) => (
               <div
                 key={book._id}
-                className="flex items-center bg-white shadow-lg rounded-xl p-4 w-full transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                className="flex flex-col sm:flex-row items-center bg-white shadow-lg rounded-xl p-4 w-full transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
               >
                 <img
                   src={book.url || "https://via.placeholder.com/100"}
                   alt={book.title}
-                  className="w-28 h-36 object-cover rounded-lg"
+                  className="w-28 h-36 object-cover rounded-lg mb-2 sm:mb-0"
                 />
-                <div className="ml-4 flex-grow">
+                <div className="sm:ml-4 flex-grow text-center sm:text-left">
                   <h3 className="text-lg font-semibold text-[#6B591D]">{book.title}</h3>
                   <p className="text-[#233714] mt-1 font-medium">Price: ₹{(book.price || 0).toFixed(2)}</p>
                 </div>
                 <button
-                  className="ml-4 px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300"
+                  className="mt-3 sm:mt-0 sm:ml-4 px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 hover:scale-105 transition-all duration-300"
                   onClick={() => deleteFromCart(book._id)}
                 >
                   Remove
@@ -117,8 +117,8 @@ const Cart = () => {
         </>
       ) : (
         // Empty Cart UI
-        <div className="flex flex-col items-center justify-center flex-grow text-center">
-          <span className="text-5xl"><img className="w-40 h-auto opacity-80" src="https://cdn-icons-png.flaticon.com/512/11010/11010851.png "/></span>
+        <div className="flex flex-col items-center justify-center flex-grow text-center p-4">
+          <img className="w-40 h-auto opacity-80" src="https://cdn-icons-png.flaticon.com/512/11010/11010851.png " alt="Empty Cart" />
           <p className="mt-4 text-xl font-semibold text-[#6B591D]">Your cart is empty.</p>
           <button
             className="mt-6 px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-md hover:bg-blue-700 transition-all duration-300"
@@ -130,7 +130,6 @@ const Cart = () => {
       )}
     </div>
   );
-  
 };
 
 export default Cart;
