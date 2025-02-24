@@ -24,7 +24,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between">
         {/* Logo and Title */}
         <div className="flex items-center">
-          <img className="h-12 mr-4" src="/src/assets/logo.png" alt="logo" />
+          <img className="h-12 mr-4" src="/logo.png" alt="logo" />
           <h1 className="text-3xl font-bold tracking-wide">Novel Nexus</h1>
         </div>
 
