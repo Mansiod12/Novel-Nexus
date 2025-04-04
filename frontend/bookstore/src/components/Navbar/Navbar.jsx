@@ -42,27 +42,27 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? "bg-[#406343] shadow-lg py-1" : "bg-[#406343] bg-opacity-95 py-2"
-    } text-white px-6 md:px-8`}>
+      scrolled ? "bg-[#406343] shadow-xl py-2" : "bg-[#406343] bg-opacity-95 py-4"
+    } text-white px-8 shadow-lg`}>
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo and Title */}
         <div className="flex items-center group">
-          <div className="overflow-hidden rounded-full bg-white p-0.5 shadow-md transform transition-all duration-300 group-hover:scale-105">
-            <img className="h-8 w-8 object-contain" src="/logo.png" alt="logo" />
+          <div className="overflow-hidden rounded-full bg-white p-1 shadow-md transform transition-all duration-300 group-hover:scale-105">
+            <img className="h-10 w-10 object-contain" src="/logo.png" alt="logo" />
           </div>
-          <h1 className="ml-2 text-xl md:text-2xl font-bold tracking-wide">
+          <h1 className="ml-3 text-2xl md:text-3xl font-bold tracking-wide">
             <span className="text-white">Novel</span>
             <span className="text-[#ECE7B4]">Nexus</span>
           </h1>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-4 lg:gap-6">
+        <div className="hidden md:flex items-center gap-6">
           {links.map((item, i) => (
             <Link
               to={item.link}
               key={i}
-              className={`relative text-base lg:text-lg font-medium transition-all duration-300 px-2 py-0.5 ${
+              className={`relative text-lg font-medium transition-all duration-300 px-2 py-1 ${
                 isActive(item.link) 
                   ? "text-[#ECE7B4]" 
                   : "text-white hover:text-[#ECE7B4]"
@@ -75,19 +75,19 @@ const Navbar = () => {
             </Link>
           ))}
 
-          <div className="flex gap-3 ml-2">
+          <div className="flex gap-4 ml-4">
             {isLoggedIn ? (
               role === "admin" ? (
                 <Link
                   to="/profile"
-                  className="px-4 py-1.5 border-2 border-[#ECE7B4] rounded-full text-sm font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
+                  className="px-5 py-2 border-2 border-[#ECE7B4] rounded-full font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
                 >
                   Admin Profile
                 </Link>
               ) : (
                 <Link
                   to="/profile"
-                  className="px-4 py-1.5 border-2 border-[#ECE7B4] rounded-full text-sm font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
+                  className="px-5 py-2 border-2 border-[#ECE7B4] rounded-full font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
                 >
                   Profile
                 </Link>
@@ -96,13 +96,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/LogIn"
-                  className="px-4 py-1.5 border-2 border-[#ECE7B4] rounded-full text-sm font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
+                  className="px-5 py-2 border-2 border-[#ECE7B4] rounded-full font-medium hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300 transform hover:scale-105 shadow-md"
                 >
                   LogIn
                 </Link>
                 <Link
                   to="/SignUp"
-                  className="px-4 py-1.5 bg-[#F3EFCC] text-[#406343] text-sm font-medium rounded-full hover:bg-[#ECE7B4] transition-all duration-300 transform hover:scale-105 shadow-md"
+                  className="px-5 py-2 bg-[#F3EFCC] text-[#406343] font-medium rounded-full hover:bg-[#ECE7B4] transition-all duration-300 transform hover:scale-105 shadow-md"
                 >
                   SignUp
                 </Link>
@@ -113,7 +113,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white text-xl bg-[#406343] bg-opacity-80 p-1.5 rounded-full shadow-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300"
+          className="md:hidden text-white text-2xl bg-[#406343] bg-opacity-80 p-2 rounded-full shadow-md hover:bg-[#ECE7B4] hover:text-[#406343] transition-all duration-300"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
@@ -123,12 +123,12 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden flex flex-col items-center mt-2 bg-[#406343] py-3 border-t border-[#ECE7B4] bg-opacity-95 backdrop-blur-sm animate-slideDown">
+        <div className="md:hidden flex flex-col items-center mt-4 bg-[#406343] py-4 border-t border-[#ECE7B4] bg-opacity-95 backdrop-blur-sm animate-slideDown">
           {links.map((item, i) => (
             <Link
               to={item.link}
               key={i}
-              className={`text-base font-medium py-2 px-6 w-full text-center ${
+              className={`text-lg font-medium py-3 px-6 w-full text-center ${
                 isActive(item.link) 
                   ? "text-[#ECE7B4] bg-[#406343] bg-opacity-70" 
                   : "text-white hover:text-[#ECE7B4] hover:bg-[#406343] hover:bg-opacity-50"
@@ -140,12 +140,12 @@ const Navbar = () => {
           ))}
 
           {/* Add Login/Signup to Mobile Menu */}
-          <div className="flex flex-col gap-2 mt-3 w-full px-6">
+          <div className="flex flex-col gap-3 mt-4 w-full px-6">
             {isLoggedIn ? (
               role === "admin" ? (
                 <Link
                   to="/profile"
-                  className="px-4 py-2 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium text-sm"
+                  className="px-5 py-3 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   Admin Profile
@@ -153,7 +153,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/profile"
-                  className="px-4 py-2 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium text-sm"
+                  className="px-5 py-3 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   Profile
@@ -163,14 +163,14 @@ const Navbar = () => {
               <>
                 <Link
                   to="/LogIn"
-                  className="px-4 py-2 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium text-sm"
+                  className="px-5 py-3 border-2 border-[#ECE7B4] rounded-full hover:bg-[#ECE7B4] hover:text-[#406343] transition-all text-center font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   LogIn
                 </Link>
                 <Link
                   to="/SignUp"
-                  className="px-4 py-2 bg-[#F3EFCC] text-[#406343] rounded-full hover:bg-[#ECE7B4] transition-all text-center font-medium text-sm"
+                  className="px-5 py-3 bg-[#F3EFCC] text-[#406343] rounded-full hover:bg-[#ECE7B4] transition-all text-center font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   SignUp
