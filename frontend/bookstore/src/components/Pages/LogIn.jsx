@@ -1,6 +1,6 @@
 import React, { useState } from "react"; 
 import { Link, useNavigate } from "react-router-dom"; 
-import {authActions} from "/src/store/auth";
+import { authActions } from "/src/store/auth";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion"; 
 import axios from "axios";
@@ -10,27 +10,33 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
-  const navigate= useNavigate();
-const dispatch=useDispatch();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault(); // 
-  try{
-  const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sign-in`, formData);
-   dispatch(authActions.login());
-   dispatch(authActions.changeRole(response.data.role));
-   localStorage.setItem("id",response.data.id);
-   localStorage.setItem("token",response.data.token);
-   localStorage.setItem("role",response.data.role);
-   navigate("/profile");
-  }catch(error){
-       alert(error.response.data.message)
-  }
-
+    e.preventDefault();
+    setLoading(true);
+    
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/v1/sign-in`, formData);
+      dispatch(authActions.login());
+      dispatch(authActions.changeRole(response.data.role));
+      localStorage.setItem("id", response.data.id);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
+      
+      // Redirect to home page instead of profile
+      navigate("/");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -55,7 +61,7 @@ const dispatch=useDispatch();
             >
               <label className="block text-[#32502E] font-semibold capitalize">{field}</label>
               <input
-                type={field === "password" ? "password" : "username"}
+                type={field === "password" ? "password" : "text"}
                 name={field}
                 value={formData[field]}
                 onChange={handleChange}
@@ -71,8 +77,19 @@ const dispatch=useDispatch();
             whileTap={{ scale: 0.95 }}
             type="submit"
             className="w-full bg-[#32502E] text-white py-3 rounded-lg font-semibold hover:bg-[#2a4727] transition"
+            disabled={loading}
           >
-            Login
+            {loading ? (
+              <span className="inline-flex items-center">
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Logging in...
+              </span>
+            ) : (
+              "Login"
+            )}
           </motion.button>
         </form>
 
