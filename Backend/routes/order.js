@@ -92,7 +92,7 @@ router.post("/create-checkout-session", async (req, res) => {
                     name: product.title,
                     images: [product.image],
                 },
-                unit_amount:Math.round(price*100),//convert to paise
+                unit_amount: Math.round(product.price * 100), // Correct way
             },
             quantity: product.quantity,
         };
@@ -102,8 +102,9 @@ router.post("/create-checkout-session", async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: "http://localhost:3000/success",  // <== give actual frontend URL
-        cancel_url: "http://localhost:3000/cancel",    // <== give actual frontend URL
+        success_url: `${process.env.FRONTEND_URL}/success`,
+cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+
     });
 
     res.json({ id: session.id });
