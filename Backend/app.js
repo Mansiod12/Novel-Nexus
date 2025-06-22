@@ -13,9 +13,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin:process.env.FRONTEND_URL, // Allow frontend requests
-    credentials: true, // If using cookies or authentication
-  }));
+    origin: "https://novel-nexus-gpq8.vercel.app",  // YOUR FRONTEND
+    credentials: true,
+}));
 
 // Routes
 app.use("/api/v1", user);
