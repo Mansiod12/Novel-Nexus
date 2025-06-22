@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { authenticateToken } = require("./userAuth");
 const User = require("../models/user");
 const Order = require("../models/order");
-
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 
 // 🛒 Place an Order
