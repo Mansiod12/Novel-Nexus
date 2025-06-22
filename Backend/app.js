@@ -8,8 +8,6 @@ import book from "./routes/book.js";
 import favourites from "./routes/favourites.js";
 import cart from "./routes/cart.js";
 import order from "./routes/order.js";
-import compression from "compression";
-app.use(compression());
 
 dotenv.config();
 
@@ -21,7 +19,6 @@ app.use(helmet());
 // 🛡️ Optional: Customize Helmet (disable contentSecurityPolicy if using external scripts)
 // app.use(helmet({ contentSecurityPolicy: false }));
 
-// Middlewares
 app.use(express.json());
 app.use(cors({
     origin: "https://novel-nexus-gpq8.vercel.app",  // Frontend URL
