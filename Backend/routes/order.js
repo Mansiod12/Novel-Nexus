@@ -85,7 +85,8 @@ router.post("/create-checkout-session", async (req, res) => {
     try {
         const { products } = req.body;
 
-        console.log("Incoming products:", products);
+        // ADD THIS:
+        console.log("Received products from frontend:", products);
 
         const lineItems = products.map((product) => {
             if (!product.title || !product.url || !product.price || !product.quantity) {
@@ -97,7 +98,7 @@ router.post("/create-checkout-session", async (req, res) => {
                     currency: "inr",
                     product_data: {
                         name: product.title,
-                        images: [product.image],
+                        images: [product.url],  // Correct now
                     },
                     unit_amount: Math.round(product.price * 100),
                 },
@@ -115,10 +116,11 @@ router.post("/create-checkout-session", async (req, res) => {
 
         res.json({ id: session.id });
     } catch (error) {
-        console.error("Stripe checkout session error:", error);
+        console.error("Stripe checkout session error:", error);  // Already present
         res.status(500).json({ message: "Stripe error", error: error.message });
     }
 });
+
 
 
 
