@@ -2,8 +2,7 @@ const router = require("express").Router();
 const { authenticateToken } = require("./userAuth");
 const User = require("../models/user");
 const Order = require("../models/order");
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 // 🛒 Place an Order
 router.post("/place-order", authenticateToken, async (req, res) => {
@@ -30,7 +29,6 @@ router.post("/place-order", authenticateToken, async (req, res) => {
         });
 
         return res.json({ status: "success", message: "Order placed successfully" });
-
     } catch (error) {
         console.error("Error placing order:", error);
         res.status(500).json({ message: "An error occurred" });
@@ -48,19 +46,20 @@ router.get("/get-order-history", authenticateToken, async (req, res) => {
         });
 
         return res.json({ status: "success", data: userData.orders });
-
     } catch (error) {
         console.error("Error fetching order history:", error);
         res.status(500).json({ message: "An error occurred" });
     }
 });
 
+// 📋 Get All Orders (Admin)
 router.get("/get-all-orders", authenticateToken, async (req, res) => {
     try {
         const orders = await Order.find()
             .populate("book")
             .populate("user")
             .sort({ createdAt: -1 });
+
         return res.json({ status: "success", data: orders });
     } catch (error) {
         console.error("Error fetching all orders:", error);
@@ -75,36 +74,34 @@ router.put("/update-status/:id", authenticateToken, async (req, res) => {
         await Order.findByIdAndUpdate(id, { status: req.body.status });
 
         return res.json({ status: "success", message: "Order status updated successfully" });
-
     } catch (error) {
         console.error("Error updating order status:", error);
         res.status(500).json({ message: "An error occurred" });
     }
 });
+
+// 💳 Create Stripe Checkout Session
 router.post("/create-checkout-session", async (req, res) => {
     try {
         const { products } = req.body;
 
-        // ADD THIS:
-        console.log("Received products from frontend:", products);
+        console.log("🚀 Received products from frontend:", products);
 
         const lineItems = products.map((product) => {
-            if (!product.title || !product.url || !product.price || !product.quantity) {
-                throw new Error("Invalid product data");
-            }
-
             return {
                 price_data: {
                     currency: "inr",
                     product_data: {
                         name: product.title,
-                        images: [product.url],  // Correct now
+                        images: [product.image],
                     },
                     unit_amount: Math.round(product.price * 100),
                 },
-                quantity:1,
+                quantity: product.quantity || 1, // Important: add fallback to 1 if missing
             };
         });
+
+        console.log("✅ Stripe lineItems:", lineItems);
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -114,15 +111,13 @@ router.post("/create-checkout-session", async (req, res) => {
             cancel_url: `${process.env.FRONTEND_URL}/cancel`,
         });
 
+        console.log("✅ Stripe session created:", session.id);
+
         res.json({ id: session.id });
     } catch (error) {
-        console.error("Stripe checkout session error:", error);  // Already present
+        console.error("❌ Stripe checkout session error:", error);
         res.status(500).json({ message: "Stripe error", error: error.message });
     }
 });
-
-
-
-
 
 module.exports = router;
