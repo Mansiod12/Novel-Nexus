@@ -13,8 +13,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin:[ process.env.FRONTEND_URL, // Allow frontend requests
-    ],
+    origin:process.env.FRONTEND_URL, // Allow frontend requests
     credentials: true, // If using cookies or authentication
   }));
 
