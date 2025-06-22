@@ -85,7 +85,13 @@ router.post("/create-checkout-session", async (req, res) => {
     try {
         const { products } = req.body;
 
+        console.log("Incoming products:", products);
+
         const lineItems = products.map((product) => {
+            if (!product.title || !product.url || !product.price || !product.quantity) {
+                throw new Error("Invalid product data");
+            }
+
             return {
                 price_data: {
                     currency: "inr",
@@ -113,6 +119,7 @@ router.post("/create-checkout-session", async (req, res) => {
         res.status(500).json({ message: "Stripe error", error: error.message });
     }
 });
+
 
 
 
