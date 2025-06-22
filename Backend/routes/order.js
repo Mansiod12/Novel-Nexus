@@ -3,6 +3,8 @@ const { authenticateToken } = require("./userAuth");
 const User = require("../models/user");
 const Order = require("../models/order");
 
+
+
 // 🛒 Place an Order
 router.post("/place-order", authenticateToken, async (req, res) => {
     try {
@@ -79,5 +81,33 @@ router.put("/update-status/:id", authenticateToken, async (req, res) => {
         res.status(500).json({ message: "An error occurred" });
     }
 });
+router.post("/create-checkout-session", async (req, res) => {
+    const { products } = req.body;
+
+    const lineItems = products.map((product) => {
+        return {
+            price_data: {
+                currency: "inr",
+                product_data: {
+                    name: product.title,
+                    images: [product.image],
+                },
+                unit_amount:Math.round(price*100),//convert to paise
+            },
+            quantity: product.quantity,
+        };
+    });
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: "http://localhost:3000/success",  // <== give actual frontend URL
+        cancel_url: "http://localhost:3000/cancel",    // <== give actual frontend URL
+    });
+
+    res.json({ id: session.id });
+});
+
 
 module.exports = router;

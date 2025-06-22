@@ -17,6 +17,8 @@ import { Routes, Route } from "react-router-dom";
 import {authActions} from "/src/store/auth";
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
+import Success from "./components/Pages/Success";
+import Cancel from "./components/Pages/Cancel";
 
 const App = ()=> {
   const dispatch=useDispatch();
@@ -47,7 +49,10 @@ const App = ()=> {
           <Route exact path="/profile/orderHistory" element={<UserOrderHistory />} />
           <Route exact path="/profile/settings" element={<Settings />} />
           
+          
           </Route>
+          <Route exact path="/success" element={<Success />} />
+<Route exact path="/cancel" element={<Cancel />} />
           <Route exact path="/LogIn" element={<LogIn />} />
           <Route exact path="/SignUp" element={<SignUp />} />
           <Route exact path="/About-Us" element={<AboutUs />} />
