@@ -102,7 +102,7 @@ router.post("/create-checkout-session", async (req, res) => {
                     },
                     unit_amount: Math.round(product.price * 100),
                 },
-                quantity: product.quantity,
+                quantity:1,
             };
         });
 
