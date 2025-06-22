@@ -82,33 +82,38 @@ router.put("/update-status/:id", authenticateToken, async (req, res) => {
     }
 });
 router.post("/create-checkout-session", async (req, res) => {
-    const { products } = req.body;
+    try {
+        const { products } = req.body;
 
-    const lineItems = products.map((product) => {
-        return {
-            price_data: {
-                currency: "inr",
-                product_data: {
-                    name: product.title,
-                    images: [product.image],
+        const lineItems = products.map((product) => {
+            return {
+                price_data: {
+                    currency: "inr",
+                    product_data: {
+                        name: product.title,
+                        images: [product.image],
+                    },
+                    unit_amount: Math.round(product.price * 100),
                 },
-                unit_amount: Math.round(product.price * 100), // Correct way
-            },
-            quantity: product.quantity,
-        };
-    });
+                quantity: product.quantity,
+            };
+        });
 
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
-        line_items: lineItems,
-        mode: "payment",
-        success_url: `${process.env.FRONTEND_URL}/success`,
-cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: lineItems,
+            mode: "payment",
+            success_url: `${process.env.FRONTEND_URL}/success`,
+            cancel_url: `${process.env.FRONTEND_URL}/cancel`,
+        });
 
-    });
-
-    res.json({ id: session.id });
+        res.json({ id: session.id });
+    } catch (error) {
+        console.error("Stripe checkout session error:", error);
+        res.status(500).json({ message: "Stripe error", error: error.message });
+    }
 });
+
 
 
 module.exports = router;
