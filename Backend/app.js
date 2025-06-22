@@ -8,6 +8,8 @@ import book from "./routes/book.js";
 import favourites from "./routes/favourites.js";
 import cart from "./routes/cart.js";
 import order from "./routes/order.js";
+import compression from "compression";
+app.use(compression());
 
 dotenv.config();
 
