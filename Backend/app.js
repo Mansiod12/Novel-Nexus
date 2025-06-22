@@ -11,27 +11,13 @@ import order from "./routes/order.js";
 dotenv.config();
 const app = express();
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "https://novel-nexus-gpq8.vercel.app",
-  "http://localhost:5173", // for local dev
-];
-
 app.use(express.json());
-
 app.use(cors({
-    origin: function (origin, callback) {
-        // allow requests with no origin 
-        // (like mobile apps, curl, Postman)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy does not allow access from this origin: ' + origin;
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    credentials: true
-}));
+    origin:[ process.env.FRONTEND_URL, // Allow frontend requests
+    "https://novel-nexus-gpq8.vercel.app",
+    ],
+    credentials: true, // If using cookies or authentication
+  }));
 
 // Routes
 app.use("/api/v1", user);
